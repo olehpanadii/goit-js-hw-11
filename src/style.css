@@ -1,6 +1,13 @@
 .fetch-image {
   object-fit: cover;
 }
+.photo-card {
+  display: flex; /* Встановлюємо flex-контейнер */
+  flex-direction: column; /* Встановлюємо вертикальну орієнтацію для дітей */
+  align-items: center; /* Вирівнюємо елементи по горизонталі по центру контейнера */
+  text-align: center; /* Вирівнюємо текст по центру */
+}
+
 .gallery {
   display: flex;
   flex-wrap: wrap;
