@@ -1,0 +1,60 @@
+.fetch-image {
+  object-fit: cover;
+}
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 40px;
+  row-gap: 40px;
+  margin-top: 20px;
+  justify-content: space-around;
+  padding: 0 30px 0 30px;
+}
+.info {
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  column-gap: 20px;
+  border: 1px solid #ddd;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+  padding: 5px;
+}
+.info-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.search-form {
+  background-color: #f0f0f0; /* Колір фону форми */
+  padding: 20px; /* Внутрішні відступи форми */
+  border-radius: 10px; /* Закруглені кути форми */
+  display: flex; /* Встановлюємо flex-контейнер для вирівнювання інпуту і кнопки в рядок */
+}
+
+/* Стилізація інпуту */
+.search-input {
+  flex: 1; /* Інпут розтягується на всю доступну ширину */
+  padding: 10px; /* Внутрішні відступи інпуту */
+  border: none; /* Видаляємо рамку інпуту */
+  border-radius: 5px; /* Закруглені кути інпуту */
+  outline: none; /* Видаляємо рамку при фокусі */
+}
+
+/* Стилізація кнопки */
+.search-button {
+  background-color: #007bff; /* Колір фону кнопки */
+  color: #fff; /* Колір тексту кнопки */
+  padding: 10px 20px; /* Внутрішні відступи кнопки */
+  border: none; /* Видаляємо рамку кнопки */
+  border-radius: 5px; /* Закруглені кути кнопки */
+  cursor: pointer; /* Змінюємо курсор при наведенні */
+  transition: background-color 0.3s; /* Анімація зміни кольору фону */
+}
+
+/* Зміна кольору кнопки при наведенні */
+.search-button:hover {
+  background-color: #0056b3;
+}
