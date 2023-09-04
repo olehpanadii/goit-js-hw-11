@@ -39,7 +39,7 @@ async function handlerrOnSubmit(evt) {
     }
   }
   const options = {
-    rootMargin: '300px',
+    rootMargin: '500px',
   };
   const observer = new IntersectionObserver(handlerLoadMore, options);
 
@@ -56,9 +56,6 @@ async function handlerrOnSubmit(evt) {
     try {
       const data = await fetchInfo(currentPage);
       if (data.hits.length === 0) {
-        Notiflix.Notify.failure(
-          'No more images to load for your search query.'
-        );
         observer.unobserve(elements.guard);
       } else {
         elements.gallery.insertAdjacentHTML(
