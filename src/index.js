@@ -1,12 +1,14 @@
 import axios from 'axios';
 import Notiflix from 'notiflix';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
 const elements = {
   form: document.querySelector('#search-form'),
   gallery: document.querySelector('.gallery'),
   guard: document.querySelector('.js-guard'),
 };
-
+const lightbox = new SimpleLightbox('.gallery a');
 elements.form.addEventListener('submit', handlerrOnSubmit);
 
 let page = 1;
@@ -14,13 +16,19 @@ let page = 1;
 async function handlerrOnSubmit(evt) {
   evt.preventDefault();
   const { searchQuery } = evt.currentTarget.elements;
+  const query = searchQuery.value.trim();
+  if (!query) {
+    Notiflix.Notify.failure('Please enter a search query.');
+    return;
+  }
+
   page = 1;
   elements.gallery.innerHTML = '';
   async function fetchInfo(currentPage = '1') {
     const BASE_URL = 'https://pixabay.com/api/';
     const params = new URLSearchParams({
       key: '39180696-751dca007ad69505d1c72e10e',
-      q: searchQuery.value,
+      q: query,
       image_type: 'photo',
       orientation: 'horizontal',
       safesearch: true,
@@ -49,6 +57,7 @@ async function handlerrOnSubmit(evt) {
       if (entry.isIntersecting) {
         page += 1;
         fetchMoreImages(page);
+        lightbox.refresh();
       }
     });
   }
@@ -62,14 +71,8 @@ async function handlerrOnSubmit(evt) {
           'beforeend',
           createMarkup(data.hits)
         );
+        lightbox.refresh();
       }
-      const { height: cardHeight } = document
-        .querySelector('.gallery')
-        .firstElementChild.getBoundingClientRect();
-      window.scrollBy({
-        top: cardHeight * 2,
-        behavior: 'smooth',
-      });
     } catch (error) {
       Notiflix.Notify.failure('An error occurred while fetching more data.');
     }
@@ -85,23 +88,26 @@ async function handlerrOnSubmit(evt) {
       Notiflix.Notify.info(`Hooray! We found ${data.totalHits} images.`);
       elements.gallery.insertAdjacentHTML('beforeend', createMarkup(data.hits));
       observer.observe(elements.guard);
+      lightbox.refresh();
     }
   } catch (error) {
     Notiflix.Notify.failure('An error occurred while fetching data.');
   }
+}
 
-  function createMarkup(arr) {
-    return arr
-      .map(
-        ({
-          webformatURL,
-          largeImageURL,
-          tags,
-          likes,
-          views,
-          comments,
-          downloads,
-        }) => `<div class="photo-card">
+function createMarkup(arr) {
+  return arr
+    .map(
+      ({
+        webformatURL,
+        largeImageURL,
+        tags,
+        likes,
+        views,
+        comments,
+        downloads,
+      }) => `<div class="photo-card">
+      <a href="${largeImageURL}" data-lightbox="gallery">
   <img class="fetch-image"src="${webformatURL}" alt="${tags}" loading="lazy"  width="300"
   height="200" />
   <div class="info">
@@ -123,7 +129,6 @@ async function handlerrOnSubmit(evt) {
     </p>
   </div>
 </div>`
-      )
-      .join('');
-  }
+    )
+    .join('');
 }
